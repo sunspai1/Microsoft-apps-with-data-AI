@@ -1,4 +1,4 @@
-![](https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/master/Media/ms-cloud-workshop.png "Microsoft Cloud Workshops")
+![Microsoft Cloud Workshops](https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/master/Media/ms-cloud-workshop.png "Microsoft Cloud Workshops")
 
 <div class="MCWHeader1">
 Innovate and modernize apps with Data and AI
@@ -26,7 +26,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
 
 <!-- TOC -->
 
-- [\[insert workshop name here\] whiteboard design session student guide](#\insert-workshop-name-here\-whiteboard-design-session-student-guide)
+- [Innovate and modernize apps with Data and AI whiteboard design session student guide](#innovate-and-modernize-apps-with-data-and-ai-whiteboard-design-session-student-guide)
   - [Abstract and learning objectives](#abstract-and-learning-objectives)
   - [Step 1: Review the customer case study](#step-1-review-the-customer-case-study)
     - [Customer situation](#customer-situation)
@@ -102,7 +102,7 @@ They recognize their solutions will benefit from the cloud and want to ensure th
 
 ### Infographic for common scenarios
 
-![The Azure IoT reference architecture.](media/iot.png 'The Azure IoT reference architecture')
+![A diagram representing a reference architecture for deploying an IoT scenario in Azure.  IoT devices push messages to a cloud gateway, which transforms data through Stream Analytics or a Function App.  The resulting data is stored in a Storage blob for machine learning, as well as Cosmos DB for use in applications and customer-facing tools such as Power BI.](media/iot.png 'The Azure IoT reference architecture')
 
 ## Step 2: Design a proof of concept solution
 
