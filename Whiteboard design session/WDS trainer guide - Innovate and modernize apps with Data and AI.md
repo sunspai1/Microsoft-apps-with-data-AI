@@ -498,7 +498,7 @@ The web app is a modernized version of WWI's old monolithic web app, implementin
 
     The following table shows how event data that contains state information (`event_type`) can be stored in PostgreSQL. All event data is stored in JSON format within the `event_data` field. The built-in JSON capabilities of PostgreSQL can directly access the data in this field for executing queries and other data operations.
 
-    ![This table displays](media/example-domain-entities.png "Example domain entities")
+    ![This table displays sample domain entities by machine and event type.](media/example-domain-entities.png "Example domain entities")
 
     The CQRS pattern also applies to the microservices used by the new web application. In the diagram below, there is a clear line of delineation between microservices that perform create, update, and delete (CUD) operations, and those optimized for query (Read) operations. The web app uses the metadata command service to create, update, and delete metadata records stored in the `metadata` Azure Cosmos DB container. A Query microservice issues read commands against `MachineTelemetry`, `MaintenanceAggregate`, and `Metadata` microservices, which are responsible for querying their respective data stores.
 

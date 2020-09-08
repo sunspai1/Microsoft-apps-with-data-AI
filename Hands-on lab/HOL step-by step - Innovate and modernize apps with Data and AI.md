@@ -908,7 +908,7 @@ Now that IoT Hub is storing data, we can begin to process the sensor data messag
    | Partition key                  | _`/machineid`_                                     |
    | Analytical store               | _select `On`_                                      |
 
-   ![The form fields are completed with the previously described settings.](media/azure-create-cosmos-db-temp-container.png 'Create a container for temperature anomalies')
+   ![The form fields are completed with the previously described settings.](media/azure-create-cosmos-db-telemetry-container.png 'Create a container for temperature anomalies')
 
 4. Select **OK** to create the container. This will take you to the Data Explorer pane for Cosmos DB.
 
@@ -921,7 +921,7 @@ Now that IoT Hub is storing data, we can begin to process the sensor data messag
    | Partition key                  | _`/machineid`_                                     |
    | Analytical store               | _select `On`_                                      |
 
-   ![In the Data Explorer pane, New Container is selected and details filled out in the Add Container fly-out pane.](media/azure-cosmos-db-add-collection-2.png 'Add New Container')
+   ![In the Data Explorer pane, New Container is selected and details filled out in the Add Container fly-out pane.](media/azure-create-cosmos-db-scored_telemetry-container.png 'Add New Container')
 
 6. Select **OK** to create the container. This will take you back to the Data Explorer pane for Cosmos DB. Repeat the process again for the following container details:
 
@@ -931,6 +931,8 @@ Now that IoT Hub is storing data, we can begin to process the sensor data messag
    | Container id                   | _`metadata`_                                       |
    | Partition key                  | _`/metadataid`_                                    |
    | Analytical store               | _select `On`_                                      |
+
+   ![In the Data Explorer pane, New Container is selected and details filled out in the Add Container fly-out pane.](media/azure-create-cosmos-db-metadata-container.png 'Add New Container')
 
 7. In the **Settings** menu, select **Keys** and navigate to the Keys page. Copy the primary key and store it in a text editor for a later task.
 
@@ -1295,6 +1297,8 @@ Events are loading into the `telemetry` container. Using that data, we can creat
    | Database account                 | _select `modernize-app-#SUFFIX#`_                  |
    | Database name                    | _`sensors`_                                        |
    | Collection name                  | _`telemetry`_                                      |
+
+   ![The correct template is selected, indicating the first step in the process.](media/code-cosmosdb-trigger.png 'Cosmos DB Trigger')
 
 3. Open **local.settings.json** and add a entries for the following, replacing references such as **modernize-app-#SUFFIX**, server names, or **{your_password}** with appropriate values.
 
@@ -1690,6 +1694,8 @@ Your sensor data is flowing into the `telemetry_to_score` Event Hub and now you 
    | Setting from local.settings.json | _select `modernizeapp_COSMOSDB`_                   |
    | Database name                    | _`sensors`_                                        |
    | Collection name                  | _`scored_telemetry`_                               |
+
+   ![The correct template is selected, indicating the first step in the process.](media/code-cosmosdb-trigger.png 'Cosmos DB Trigger')
 
 3. In the **ProcessTemperatureAnomalyEvents.cs** file, replace the existing code with the following.
 
