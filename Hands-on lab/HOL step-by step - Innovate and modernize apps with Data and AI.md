@@ -780,7 +780,9 @@ Now that your data is streaming into Azure IoT Hub, it is time to train and buil
     # Save the model and upload it to the run
     model_file_name = 'outputs/model.pkl'
     joblib.dump(value = clf, filename = model_file_name)
-    run.upload_file(name = model_file_name, path_or_stream = model_file_name)
+
+    # Typically, the run.upload_file() method would be used to capture saved files
+    # However, as per the Azure documentation, files stored in the outputs/ directory are automatically captured by the current Run
 
     # Complete the run
     run.complete()
