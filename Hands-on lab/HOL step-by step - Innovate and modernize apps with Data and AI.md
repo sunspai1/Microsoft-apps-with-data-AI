@@ -615,9 +615,9 @@ The instructions in this task come from the guide on [how to install IoT Edge on
 
     ![The Select IoT Hub option is selected.](media/code-iot-edge-select-hub.png 'Select IoT Hub')
 
-    >**Note**: If this does not work for you, you can alternatively click **Set IoT Hub Connection String** in VS Code. Then, navigate to your IoT Hub in Azure portal. Under **Settings**, select **Shared access policies**, and select the **iothubowner** policy. Copy **Connection string--primary key** into VS Code. Your IoT Hub should now appear.   
+    >**Note**: If this does not work for you, you can alternatively select **Set IoT Hub Connection String** in VS Code. Then, navigate to your IoT Hub in Azure portal. Under **Settings**, select **Shared access policies**, and select the **iothubowner** policy. Copy **Connection string--primary key** into VS Code. Your IoT Hub should now appear.   
     >
-    >   ![iothubowner connection string.](./media/access-iothub-connection-string.png "Accessing the iothubowner access policy connection string to access the IoT Hub within VS Code.")
+    >   ![Accessing the iothubowner access policy connection string to access the IoT Hub within VS Code.](./media/access-iothub-connection-string.png "iothubowner connection string")
 
 17. Right-click on the `modernize-app-ubuntu1` device and select **Create Deployment for Single Device**.
 
