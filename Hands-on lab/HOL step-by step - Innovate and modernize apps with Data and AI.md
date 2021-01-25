@@ -615,6 +615,10 @@ The instructions in this task come from the guide on [how to install IoT Edge on
 
     ![The Select IoT Hub option is selected.](media/code-iot-edge-select-hub.png 'Select IoT Hub')
 
+    >**Note**: If this does not work for you, you can alternatively select **Set IoT Hub Connection String** in VS Code. Then, navigate to your IoT Hub in Azure portal. Under **Settings**, select **Shared access policies**, and select the **iothubowner** policy. Copy **Connection string--primary key** into VS Code. Your IoT Hub should now appear.   
+    >
+    >   ![Accessing the iothubowner access policy connection string to access the IoT Hub within VS Code.](./media/access-iothub-connection-string.png "iothubowner connection string")
+
 17. Right-click on the `modernize-app-ubuntu1` device and select **Create Deployment for Single Device**.
 
     ![The Create Deployment for Single Device option is selected.](media/code-iot-edge-create-deployment.png 'Create Deployment for Single Device')
@@ -713,17 +717,19 @@ Now that your data is streaming into Azure IoT Hub, it is time to train and buil
 
     ![The New Compute option is selected.](media/azure-ml-notebook-add-compute.png 'Add new compute')
 
-4. In the **New compute instance** section, complete the following and then select **Create**.
+4. In the **Create compute instance** window, under the **Select virtual machine** blade, complete the following and then select **Next**.
 
    | Field                          | Value                                              |
    | ------------------------------ | ------------------------------------------         |
-   | Compute name                   | _`modernizeapp`_                                   |
+   | Region                         | _`Keep it set at the default value`_               |
    | Virtual machine type           | _select `CPU (Central Processing Unit)`_           |
    | Virtual machine size           | _select `Standard_DS3_v2`_                         |
 
-   ![In the New compute instance output, form field entries are filled in.](media/azure-ml-notebook-add-compute-2.png 'New compute instance')
+   ![In the New compute instance output, form field entries are filled in.](media/azure-ml-notebook-add-compute-3.png 'New compute instance')
 
-5. Copy and paste the following code into the notebook code block.
+5. In the **Configure Settings** blade, set **Compute name** to `modernizeapp#SUFFIX#` and then select **Create**.
+
+6. Copy and paste the following code into the notebook code block.
 
     ```python
     from azureml.core import Workspace, Environment, Datastore
@@ -774,7 +780,9 @@ Now that your data is streaming into Azure IoT Hub, it is time to train and buil
     # Save the model and upload it to the run
     model_file_name = 'outputs/model.pkl'
     joblib.dump(value = clf, filename = model_file_name)
-    run.upload_file(name = model_file_name, path_or_stream = model_file_name)
+
+    # Typically, the run.upload_file() method would be used to capture saved files
+    # However, as per the Azure documentation, files stored in the outputs/ directory are automatically captured by the current Run
 
     # Complete the run
     run.complete()
@@ -783,7 +791,7 @@ Now that your data is streaming into Azure IoT Hub, it is time to train and buil
     model = run.register_model(model_name = 'stamp_press_model', model_path = model_file_name)
     ```
 
-6. After the **Compute** has been created, select **Run cell** on the cell. This will train and test a predictive maintenance model and then register the final model with Azure ML.
+7. After the **Compute** has been created, select **Run cell** on the cell. This will train and test a predictive maintenance model and then register the final model with Azure ML.
 
     ![Running code to train an Azure ML model.](media/azure-ml-notebook-run.png 'Run cell')
 
