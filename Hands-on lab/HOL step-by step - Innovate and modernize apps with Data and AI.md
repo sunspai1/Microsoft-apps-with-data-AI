@@ -43,18 +43,18 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
     - [Task 3: Develop the predictive maintenance model](#task-3-develop-the-predictive-maintenance-model)
     - [Task 4: Deploy the predictive maintenance model](#task-4-deploy-the-predictive-maintenance-model)
     - [Task 5: Test the predictive maintenance model](#task-5-test-the-predictive-maintenance-model)
-  - [Exercise 3:  Create an Azure Function to send event telemetry to Cosmos DB](#exercise-3-create-an-azure-function-to-send-event-telemetry-to-cosmos-db)
+  - [Exercise 3:  Create an Azure Function to send event telemetry to Cosmos DB](#exercise-3--create-an-azure-function-to-send-event-telemetry-to-cosmos-db)
     - [Task 1: Enable Azure Synapse Link for Cosmos DB](#task-1-enable-azure-synapse-link-for-cosmos-db)
     - [Task 2: Create Cosmos DB containers](#task-2-create-cosmos-db-containers)
     - [Task 3: Create an Azure Function to write event data to Cosmos DB](#task-3-create-an-azure-function-to-write-event-data-to-cosmos-db)
     - [Task 4: Deploy and configure an Azure Function](#task-4-deploy-and-configure-an-azure-function)
-  - [Exercise 4:  Enrich event telemetry with predictive maintenance results](#exercise-4-enrich-event-telemetry-with-predictive-maintenance-results)
-    - [Task 1:  Create an Event Hub](#task-1-create-an-event-hub)
+  - [Exercise 4:  Enrich event telemetry with predictive maintenance results](#exercise-4--enrich-event-telemetry-with-predictive-maintenance-results)
+    - [Task 1:  Create an Event Hub](#task-1--create-an-event-hub)
     - [Task 2: Create an events table in PostgreSQL](#task-2-create-an-events-table-in-postgresql)
     - [Task 3: Create an Azure Function based on a Cosmos DB trigger](#task-3-create-an-azure-function-based-on-a-cosmos-db-trigger)
-  - [Exercise 5:  Enrich event telemetry with automated anomaly detection](#exercise-5-enrich-event-telemetry-with-automated-anomaly-detection)
+  - [Exercise 5:  Enrich event telemetry with automated anomaly detection](#exercise-5--enrich-event-telemetry-with-automated-anomaly-detection)
     - [Task 1: Create an Azure Stream Analytics job](#task-1-create-an-azure-stream-analytics-job)
-  - [Exercise 6:  Send scored telemetry data to PostgreSQL](#exercise-6-send-scored-telemetry-data-to-postgresql)
+  - [Exercise 6:  Send scored telemetry data to PostgreSQL](#exercise-6--send-scored-telemetry-data-to-postgresql)
     - [Task 1: Create an Azure Function to write temperature anomalies data to PostgreSQL](#task-1-create-an-azure-function-to-write-temperature-anomalies-data-to-postgresql)
     - [Task 2: Deploy and configure an Azure Function](#task-2-deploy-and-configure-an-azure-function)
   - [Exercise 7: Modernize services logic to use event sourcing and CQRS](#exercise-7-modernize-services-logic-to-use-event-sourcing-and-cqrs)
@@ -68,7 +68,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
     - [Task 3: Embed the Power BI notebook](#task-3-embed-the-power-bi-notebook)
   - [After the hands-on lab](#after-the-hands-on-lab)
     - [Task 1: Delete Lab Resources](#task-1-delete-lab-resources)
-    - [Task 2:  Delete the Power BI Workspace](#task-2-delete-the-power-bi-workspace)
+    - [Task 2:  Delete the Power BI Workspace](#task-2--delete-the-power-bi-workspace)
 
 <!-- /TOC -->
 
@@ -898,13 +898,13 @@ Now that IoT Hub is storing data, we can begin to process the sensor data messag
 
 ### Task 2: Create Cosmos DB containers
 
-1. In the **Containers** section for your Cosmos DB account, select **Browse**.
+1. In the **Overview** section for your Cosmos DB account, select **Add Container**.
 
-    ![In the Cosmos DB containers section, Browse is selected.](media/azure-cosmos-db-browse.png 'Browse')
+    ![In the Overview, Add Container is selected.](media/azure-cosmos-db-add-container.png 'Add Container')
 
-2. Select **+ Add Collection** on the Browse pane to add a new collection.
+2. In the **Data Explorer** section, select **New Container** to create a new container.
 
-    ![In the Browse pane, Add Collection is selected.](media/azure-cosmos-db-add-collection.png 'Add Collection')
+    ![In the Data Explorer tab, New Container is selected.](media/azure-cosmos-db-new-container.png 'New Container')
 
 3. In the **Add Container** tab, complete the following:
 
@@ -1151,7 +1151,7 @@ Now that IoT Hub is storing data, we can begin to process the sensor data messag
    | IoTHubTriggerConnection        | _enter the Event Hub compatible endpoint for your IoT Hub_ |
    | EventHubConnection             | _enter the Event Hub primary connection string, NOT the IoT Hub connection string_    |
 
-8. Select **Save** and then **Continue** on the App Service menu to save the new application settings.
+8. Select **Save** and then **Continue** on the App Service menu to save the new application settings.  These application settings will be used in the Azure functions we have created.  `cosmosEndpointUrl`, `cosmosPrimaryKey`, and `IoTHubTriggerConnection` will be used in the `WriteEventsToTelemetryContainer` function.  `azureMLEndpointUrl`, `pg_connection`, and `EventHubConnection` will be used in the `ProcessTelemetryEvents` function.  Finally, `modernizeapp_COSMOSDB` will be used in the `ProcessTemperatureAnomalyEvents` and `ProcessTelemetryEvents` functions.  By creating these application settings, we avoid the risk of hard-coding connection strings in our files or including passwords in configuration files which might be checked into source control.  The application settings are stored securely and if you have multiple environments, you can configure each App Service to use different settings.
 
     ![The New application settings are filled out.](media/azure-function-new-appsettings.png 'New application settings')
 
@@ -1558,7 +1558,7 @@ Your sensor data is flowing into the `telemetry_to_score` Event Hub and now you 
 
     ![In the Services search result list, Stream Analytics jobs is selected.](media/azure-stream-analytics-search.png 'Stream Analytics jobs')
 
-2. In the Stream Analytics jobs page, select **+ Add** to add a new container.  In the **New Stream Analytics job** tab, complete the following and then select **Create** to create the Stream Analytics job.
+2. In the Stream Analytics jobs page, select **+ New** to add a new container.  In the **New Stream Analytics job** tab, complete the following and then select **Create** to create the Stream Analytics job.
 
    | Field                          | Value                                              |
    | ------------------------------ | ------------------------------------------         |
@@ -1577,7 +1577,7 @@ Your sensor data is flowing into the `telemetry_to_score` Event Hub and now you 
 
     ![In the Configure menu, Storage account settings is selected, followed by the Add storage account option.](media/azure-stream-analytics-add-storage.png 'Add storage account')
 
-5. Choose the storage account you created before the hands-on lab and then select **Save**.
+5. Choose the storage account you created before the hands-on lab, change the Authentication mode to **Connection string** and then select **Save**.
 
     ![In the Storage account settings menu, the appropriate storage account is selected.](media/azure-stream-analytics-add-storage-2.png 'Select storage account')
 
@@ -2069,9 +2069,9 @@ In this final exercise, you will load data from Cosmos DB containers into an Azu
 
     ![The Azure Synapse Analytics workspace for the lab is selected.](media/azure-synapse-select.png 'modernizeapp workspace')
 
-3. Select **Launch Synapse Studio** from the Synapse workspace page.
+3. Select **Open Synapse Studio** from the Synapse workspace page.
 
-    ![Launch Synapse Studio is selected.](media/azure-synapse-launch-studio.png 'Launch Synapse Studio')
+    ![Open Synapse Studio is selected.](media/azure-synapse-launch-studio.png 'Open Synapse Studio')
 
 4. In the **Manage** page, select **Linked services** from the External connections section. Then select **+ New**.
 
