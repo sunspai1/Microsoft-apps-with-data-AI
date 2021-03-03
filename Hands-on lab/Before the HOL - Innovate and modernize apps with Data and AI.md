@@ -165,7 +165,7 @@ IoT Hub will store messages sent from IoT devices. In the hands-on lab, you will
 
 4. Select **Management** from the menu. In the **Pricing and scale tier** menu, select the option **F1: Free tier**.
 
-    > **Note**: The free tier is limited to routing 8,000 messages per day and this includes messages sent from IoT devices into IoT Hub as well as messages which IoT Hub consumers process. Throughout the course of the hands-on lab, we can expect to generate and process upwards of 3,000 messages. If you run the sensor data generator longer than five hours, you might hit the daily limit for Iot Hub's free tier. If this is a concern, choose **S1: Standard tier** instead.  The Basic tier does not include functionality which we will use during the lab, so selecting it is not recommended.
+    > **Note**: The free tier is limited to routing 8,000 messages per day, and this includes messages sent from IoT devices into IoT Hub as well as messages which IoT Hub consumers process. Throughout the course of the hands-on lab, we can expect to generate and process upwards of 3,000 messages. If you run the sensor data generator longer than five hours, you might hit the daily limit for IoT Hub's free tier. If this is a concern, choose **S1: Standard tier** instead.  The Basic tier does not include functionality which we will use during the lab, so selecting it is not recommended.
 
     ![The Management form fields are completed with the Free tier option selected in the Pricing and scale tier menu.](media/azure-create-iot-hub-2.png 'Iot Hub Size and scale')
 
@@ -238,7 +238,7 @@ In the hands-on lab, you will use an Ubuntu virtual machine to send sensor data.
 
 4. Select **Review + create**. On the review screen, select **Create**.
 
-5. A modal dialog will appear to generate a new key pair.  Select **Download private key and create resource**. This will create the SSH key and you will download a file named modernize-app-vm_key.pem.
+5. A modal dialog will appear to generate a new key pair.  Select **Download private key and create resource**. This will create the SSH key, and you will download a file named modernize-app-vm_key.pem.
 
     ![Generate a new key pair.](media/azure-create-linux-vm-2.png 'Generate new key pair')
 
