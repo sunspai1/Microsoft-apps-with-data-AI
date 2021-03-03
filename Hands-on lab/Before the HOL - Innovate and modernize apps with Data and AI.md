@@ -123,7 +123,6 @@ Azure Data Lake Storage Gen2 will be critical for several integration points thr
    | Pricing tier                   | _select Standard_                           |
    | Account kind                   | _select StorageV2 (general purpose v2)_     |
    | Replication                    | _select Locally-redundant storage (LRS)_    |
-   | Access tier                    | _select Hot_                                |
 
     > **Note**: Please replace the `#SUFFIX#` tag in the storage account name with a suffix you would like to use. Names of storage accounts must be globally unique.
 
@@ -133,7 +132,7 @@ Azure Data Lake Storage Gen2 will be critical for several integration points thr
 
 5. Leave the networking settings at their default values: a connectivity method of **Public endpoint (all networks)** and a network routing preference of **Microsoft network routing (default)**.  Select **Next : Data protection >** and leave these settings at their default values.
 
-6. Select **Next : Advanced >**. In the Data Lake Gen2 section, enable **Hierarchical namespace**.
+6. Select the **Advanced** tab in the menu, bypassing **Data protection**. In the Data Lake Gen2 section, enable **Hierarchical namespace**.
 
     ![The Hierarchical namespace option is enabled.](media/azure-create-storage-account-2.png 'Storage Account Advanced Settings')
 
@@ -149,7 +148,7 @@ IoT Hub will store messages sent from IoT devices. In the hands-on lab, you will
 
     ![In the Services search result list, IoT Hub is selected.](media/azure-create-iot-hub-search.png 'IoT Hub')
 
-2. Select **+ Add** on the IoT Hub page.
+2. Select **+ New** on the IoT Hub page.
 
 3. Within the **IoT hub** form, complete the following:
 
@@ -162,13 +161,13 @@ IoT Hub will store messages sent from IoT devices. In the hands-on lab, you will
 
    > **Note**: Please replace the `#SUFFIX#` tag in the IoT hub name with a suffix you would like to use. Names of IoT hubs must be globally unique.
 
-   ![The form fields are completed with the previously described settings and with the Size and scale menu option selected.](media/azure-create-iot-hub-1.png 'Iot Hub Settings')
+   ![The form fields are completed with the previously described settings and with the Management menu option selected.](media/azure-create-iot-hub-1.png 'Iot Hub Settings')
 
-4. Select **Size and scale** from the menu. In the **Pricing and scale tier** menu, select the option **F1: Free tier**.
+4. Select **Management** from the menu. In the **Pricing and scale tier** menu, select the option **F1: Free tier**.
 
-    > **Note**: The free tier is limited to routing 8,000 messages per day and this includes messages sent from IoT devices into IoT Hub as well as messages which IoT Hub consumers process. Throughout the course of the hands-on lab, we can expect to generate and process upwards of 3,000 messages. If you run the sensor data generator longer than five hours, you might hit the daily limit for Iot Hub's free tier. If this is a concern, choose **S1: Standard tier** instead.  The Basic tier does not include functionality which we will use during the lab, so selecting it is not recommended.
+    > **Note**: The free tier is limited to routing 8,000 messages per day, and this includes messages sent from IoT devices into IoT Hub as well as messages which IoT Hub consumers process. Throughout the course of the hands-on lab, we can expect to generate and process upwards of 3,000 messages. If you run the sensor data generator longer than five hours, you might hit the daily limit for IoT Hub's free tier. If this is a concern, choose **S1: Standard tier** instead.  The Basic tier does not include functionality which we will use during the lab, so selecting it is not recommended.
 
-    ![The Size and scale form fields are completed with the Free tier option selected in the Pricing and scale tier menu.](media/azure-create-iot-hub-2.png 'Iot Hub Size and scale')
+    ![The Management form fields are completed with the Free tier option selected in the Pricing and scale tier menu.](media/azure-create-iot-hub-2.png 'Iot Hub Size and scale')
 
     >**Note**: You may also find the tier setting on the **Management** tab.
 
@@ -182,7 +181,7 @@ The container registry will store container images you will create during the ha
 
     ![In the Services search result list, Container registries is selected.](media/azure-create-container-registries-search.png 'Container registries')
 
-2. Select **+ Add** on the Container registries page.
+2. Select **+ New** on the Container registries page.
 
 3. Within the **Container registry** form, complete the following:
 
@@ -225,8 +224,8 @@ In the hands-on lab, you will use an Ubuntu virtual machine to send sensor data.
    | Virtual machine name           | _`modernize-app-vm`_                               |
    | Region                         | _select the resource group's location_             |
    | Availability options           | _select `No infrastructure redundancy required`_   |
-   | Image                          | _select `Ubuntu Server 18.04 LTS`_                 |
-   | Azure Spot instance            | _select `No`_                                      |
+   | Image                          | _select `Ubuntu Server 18.04 LTS - Gen1`_          |
+   | Azure Spot instance            | _leave unchecked_                                  |
    | Size                           | _select `Standard_D2s_v3`_                         |
    | Authentication type            | _select `SSH public key`_                          |
    | Username                       | _select `iotuser`_                                 |
@@ -239,7 +238,7 @@ In the hands-on lab, you will use an Ubuntu virtual machine to send sensor data.
 
 4. Select **Review + create**. On the review screen, select **Create**.
 
-5. A modal dialog will appear to generate a new key pair.  Select **Download private key and create resource**. This will create the SSH key and you will download a file named modernize-app-vm_key.pem.
+5. A modal dialog will appear to generate a new key pair.  Select **Download private key and create resource**. This will create the SSH key, and you will download a file named modernize-app-vm_key.pem.
 
     ![Generate a new key pair.](media/azure-create-linux-vm-2.png 'Generate new key pair')
 
@@ -283,7 +282,7 @@ The hands-on lab will use Cosmos DB as a key component in the event sourcing arc
 
     ![In the Services search result list, Azure Cosmos DB is selected.](media/azure-create-cosmos-db-search.png 'Cosmos DB')
 
-2. Select **+ Add** on the Container registries page.
+2. Select **+ New** on the Azure Cosmos DB page.
 
 3. Within the **Create Azure Cosmos DB Account** form, complete the following:
 
@@ -293,8 +292,8 @@ The hands-on lab will use Cosmos DB as a key component in the event sourcing arc
    | Resource group                 | _select `modernize-app`_                    |
    | Account name                   | _`modernize-app-#SUFFIX#`_                  |
    | API                            | _select `Core (SQL)`_                       |
-   | Notebooks                      | _select `Off`_                              |
    | Location                       | _select the resource group's location_      |
+   | Capacity mode                  | _select `Provisioned throughput`_           |
    | Apply Free Tier Discount       | _select `Apply` if available_               |
    | Account Type                   | _select `Non-Production`_                   |
    | Geo-Redundancy                 | _select `Disable`_                          |
@@ -315,7 +314,7 @@ The hands-on lab will use Cosmos DB as a key component in the event sourcing arc
 
     ![In the Services search result list, Function App is selected.](media/azure-create-function-app-search.png 'Function App')
 
-2. Select **+ Add** on the Function App page.
+2. Select **+ New** on the Function App page.
 
 3. Within the **Create Function App** form, complete the following:
 
@@ -325,7 +324,7 @@ The hands-on lab will use Cosmos DB as a key component in the event sourcing arc
    | Resource group                 | _select `modernize-app`_                    |
    | Function App name              | _`modernize-app-#SUFFIX#`_                  |
    | Publish                        | _select `Code`_                             |
-   | Runtime stack                  | _select `.NET Core`_                        |
+   | Runtime stack                  | _select `.NET`_                             |
    | Version                        | _select `3.1`_                              |
    | Region                         | _select the resource group's location_      |
 
@@ -347,7 +346,7 @@ In this task, you will deploy a new Azure Database for PostgreSQL, selecting the
 
     ![In the Services search result list, Azure Database for PostgreSQL servers is selected.](media/azure-create-postgres-search.png 'Azure Database for PostgreSQL servers')
 
-2. Select **+ Add** on the Azure Database for PostgreSQL servers page.
+2. Select **+ New** on the Azure Database for PostgreSQL servers page.
 
 3. Select **Create** under the **Hyperscale (Citus) server group** deployment option.
 
@@ -371,17 +370,17 @@ In this task, you will deploy a new Azure Database for PostgreSQL, selecting the
 
 6. Select **Review + create** and then **Create** to provision the server. Provisioning takes **up to 10** minutes.
 
-7. The page will redirect to monitor deployment. When the live status changes from **Your deployment is underway** to **Your deployment is complete**, select the **Outputs** menu item on the left of the page. The outputs page will contain a coordinator hostname with a button next to it to copy the value to the clipboard. Record this information for later use.
-
-   ![The deployment output shows the Coordinator Hostname value after deployment is complete.](media/azure-create-postgres-3.png 'Outputs')
-
-8. Select **Overview** to view the deployment details, then select **Go to resource**.
+7. Select **Overview** to view the deployment details, then select **Go to resource**.
 
    ![The Overview menu item and Go to resource button are both highlighted.](media/azure-create-postgres-4.png 'Deployment overview')
 
    If you are redirected to the Resource Group instead of the Azure Database for PostgreSQL server group, select the server group to continue to the next step.
 
    ![The Azure Database for PostgreSQL server group is highlighted.](media/azure-create-postgres-5.png 'Resource Group')
+
+8. Copy the **Coordinator name** to the clipboard.  Record this information for later use.
+
+    ![The overview page shows the Coordinator name value after deployment is complete.](media/azure-create-postgres-3.png 'Coordinator name')
 
 9. Select **Networking** in the left-hand menu underneath Security. In the Firewall rules blade, select **Yes** to *allow Azure services and resources to access this server group*, then select the **+ Add 0.0.0.0 - 255.255.255.255** link to create a new firewall rule to allow all connections (from your machine and Azure services).
 
@@ -391,11 +390,11 @@ In this task, you will deploy a new Azure Database for PostgreSQL, selecting the
 
 ### Task 9: Provision an Azure Synapse Analytics workspace
 
-1. In the [Azure portal](https://portal.azure.com), type in "azure synapse analytics" in the top search menu and then select **Azure Synapse Analytics (workspaces preview)** from the results.
+1. In the [Azure portal](https://portal.azure.com), type in "azure synapse analytics" in the top search menu and then select **Azure Synapse Analytics** from the results.
 
-    ![In the Services search result list, Azure Synapse Analytics (workspaces preview) is selected.](media/azure-create-synapse-search.png 'Azure Synapse Analytics (workspaces preview)')
+    ![In the Services search result list, Azure Synapse Analytics is selected.](media/azure-create-synapse-search.png 'Azure Synapse Analytics')
 
-2. Select **+ Add** on the Azure Synapse Analytics (workspaces preview) page.
+2. Select **+ New** on the Azure Synapse Analytics page.
 
 3. Within the **Create Synapse workspace** form, complete the following:
 
@@ -403,6 +402,7 @@ In this task, you will deploy a new Azure Database for PostgreSQL, selecting the
    | ---------------------------------------------------- | ------------------------------------------       |
    | Subscription                                         | _select the appropriate subscription_            |
    | Resource group                                       | _select `modernize-app`_                         |
+   | Managed resource group                               | _leave blank_                                    |
    | Workspace name                                       | _`modernizeapp#SUFFIX#`_                         |
    | Region                                               | _select the resource group's location_           |
    | Select Data Lake Storage Gen2                        | _select `From subscription`_                     |
@@ -420,19 +420,19 @@ In this task, you will deploy a new Azure Database for PostgreSQL, selecting the
 
    > **Important**: Be sure to check the box which reads "Assign myself the Storage Blob Data Contributor role on the Data Lake Storage Gen2 account"!  If you do not check this box, you will be unable to complete certain exercises unless you add your account as a Storage Blob Data Contributor later.
 
-4. Select **Next : Security + networking >** to move on to the Security and Networking page.  On the Security and Networking page, enter a valid password you will remember. Leave the other options at their default values.
+4. Select **Next : Security >** to move on to the Security page.  On the Security page, enter a valid password you will remember. Leave the other options at their default values.
 
-    ![The Security and Networking page with a valid password entered.](media/azure-create-synapse-2.png 'Security and Networking')
+    ![The Security page with a valid password entered.](media/azure-create-synapse-2.png 'Security')
 
 5. Select **Review + create**. On the review screen, select **Create**.  Provisioning takes **up to 10** minutes.
 
-6. Select **Overview** to view the deployment details, then select **Go to resource**.
+6. Select **Overview** to view the deployment details, then select **Go to resource group**.  Then, select the **modernizeapp#SUFFIX** Synapse workspace.
 
-7. In the Synapse workspace, select **+ New SQL pool** to create a new SQL pool.
+7. In the Synapse workspace, select **+ New dedicated SQL pool** to create a new SQL pool.
 
     ![The Synapse workspace page with New SQL Pool selected.](media/azure-create-synapse-3.png 'Synapse workspace')
 
-8. Enter a SQL pool name of `modernapp` and select a performance level of DW100c.
+8. Enter a dedicated SQL pool name of `modernapp` and select a performance level of DW100c.
 
     ![The form fields are completed with the previously described settings.](media/azure-create-synapse-4.png 'Create SQL pool')
 
@@ -461,7 +461,7 @@ In this task, you will deploy a new Azure Database for PostgreSQL, selecting the
 
     ![In the Services search result list, Machine Learning is selected.](media/azure-create-ml-search.png 'Machine Learning')
 
-2. Select **+ Add** on the Machine Learning page.
+2. Select **+ New** on the Machine Learning page.
 
 3. Within the **Create Machine Learning workspace** form, complete the following:
 
@@ -471,11 +471,12 @@ In this task, you will deploy a new Azure Database for PostgreSQL, selecting the
    | Resource group                 | _select `modernize-app`_                         |
    | Workspace name                 | _`modernize-app`_                                |
    | Region                         | _select the resource group's location_           |
-   | Workspace edition              | _select `Enterprise`_                            |
+   | Storage account                | _leave at the default of creating a new account_ |
+   | Key vault                      | _leave at the default of creating a new key vault_ |
+   | Application insights           | _leave at the default of creating a new instance_ |
+   | Container registry             | _select `modernizeapp#SUFFIX#`                   |
 
    ![The form fields are completed with the previously described settings.](media/azure-create-ml-1.png 'Create Machine Learning workspace')
-
-   >**Note**: If you are asked to specify resources that should be created with the workspace, like storage accounts, accept the default (new) resources.
 
 4. Select **Review + create**. On the review screen, select **Create**.  Provisioning takes **up to 5** minutes.
 
@@ -485,7 +486,7 @@ In this task, you will deploy a new Azure Database for PostgreSQL, selecting the
 
     ![In the Services search result list, Event Hubs is selected.](media/azure-create-event-hub-search.png 'Event Hubs')
 
-2. Select **+ Add** on the Event Hubs page.
+2. Select **+ New** on the Event Hubs page.
 
 3. Within the **Create Namespace** form, complete the following:
 
