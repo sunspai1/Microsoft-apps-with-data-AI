@@ -40,7 +40,8 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
     - [Task 9: Provision an Azure Synapse Analytics workspace](#task-9-provision-an-azure-synapse-analytics-workspace)
     - [Task 10: Provision a Machine Learning workspace](#task-10-provision-a-machine-learning-workspace)
     - [Task 11: Provision an Event Hub](#task-11-provision-an-event-hub)
-    - [Task 12: Download the Hands-On Lab Contents](#task-12-download-the-hands-on-lab-contents)
+    - [Task 12: Provision an Azure Stream Analytics job](#task-12-provision-an-azure-stream-analytics-job)
+    - [Task 13: Download the Hands-On Lab Contents](#task-13-download-the-hands-on-lab-contents)
 
 <!-- /TOC -->
 
@@ -513,7 +514,26 @@ In this task, you will deploy a new Azure Database for PostgreSQL, selecting the
 
     ![The primary connection string is selected.](media/azure-event-hub-connection-string.png 'Connection String - Primary Key')
 
-### Task 12: Download the Hands-On Lab Contents
+### Task 12: Provision an Azure Stream Analytics job
+
+1. In the [Azure portal](https://portal.azure.com), type in "stream analytics jobs" in the top search menu and then select **Stream Analytics jobs** from the results.
+
+    ![In the Services search result list, Stream Analytics jobs is selected.](media/azure-stream-analytics-search.png 'Stream Analytics jobs')
+
+2. In the Stream Analytics jobs page, select **+ New** to add a new container.  In the **New Stream Analytics job** tab, complete the following and then select **Create** to create the Stream Analytics job.
+
+   | Field                          | Value                                              |
+   | ------------------------------ | ------------------------------------------         |
+   | Job name                       | _`modernize-app-stream`_                           |
+   | Subscription                   | _select the appropriate subscription_              |
+   | Resource group                 | _select `modernize-app`_                           |
+   | Location                       | _select the resource group's location_             |
+   | Hosting environment            | _select `Cloud`_                                   |
+   | Streaming units                | _select `3`_                                       |
+
+   ![In the New Stream Analytics job tab, form details are filled in.](media/azure-stream-analytics-create.png 'New Stream Analytics job')
+
+### Task 13: Download the Hands-On Lab Contents
 
 1. Read through both steps of this task.  Once you have done that, scroll back to the top of this document and return to the top level of the repository.
 

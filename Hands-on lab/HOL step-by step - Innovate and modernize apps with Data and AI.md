@@ -53,7 +53,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
     - [Task 2: Create an events table in PostgreSQL](#task-2-create-an-events-table-in-postgresql)
     - [Task 3: Create an Azure Function based on a Cosmos DB trigger](#task-3-create-an-azure-function-based-on-a-cosmos-db-trigger)
   - [Exercise 5:  Enrich event telemetry with automated anomaly detection](#exercise-5--enrich-event-telemetry-with-automated-anomaly-detection)
-    - [Task 1: Create an Azure Stream Analytics job](#task-1-create-an-azure-stream-analytics-job)
+    - [Task 1: Start an Azure Stream Analytics job](#task-1-start-an-azure-stream-analytics-job)
   - [Exercise 6:  Send scored telemetry data to PostgreSQL](#exercise-6--send-scored-telemetry-data-to-postgresql)
     - [Task 1: Create an Azure Function to write temperature anomalies data to PostgreSQL](#task-1-create-an-azure-function-to-write-temperature-anomalies-data-to-postgresql)
     - [Task 2: Deploy and configure an Azure Function](#task-2-deploy-and-configure-an-azure-function)
@@ -589,6 +589,8 @@ The instructions in this task come from the guide on [how to install IoT Edge on
     }
     ```
 
+    For an explanation of the code, we will send messages to Azure IoT Hub in the shape of `MessageBody`, which includes a `Machine` entry containing information about the monitored machine, as well as an `Ambient` entry which contains the current temperature and humidity in the room.  The `Run()` method controls message management, sending one message every `Interval` seconds, though this is configurable as an environment setting.  We connect to the Edge runtime and, once synchronization with the IoT Hub is complete, we build out new messages using `GenerateNewMessage()` and send them.  The `GenerateNewMessage()` function builds artificial messages which generally follow a normal distribution but occasionally exhibit anomalous behavior.  After generating and sending a message, we wait `Interval` milliseconds before sending a new message.
+
 12. Navigate to the **Command Palette** by selecting it from the View menu, or by pressing `Ctrl+Shift+P`. Select the option **Azure IoT Edge: Set Default Target Platform for Edge Solution**.
 
     ![Set a target platform for the IoT Edge Solution.](media/code-iot-edge-target-platform.png 'Azure IoT Edge: Set Default Target Platform for Edge Solution')
@@ -790,6 +792,8 @@ Now that your data is streaming into Azure IoT Hub, it is time to train and buil
     # Register the model with the workspace
     model = run.register_model(model_name = 'stamp_press_model', model_path = model_file_name)
     ```
+
+    This notebook pulls the maintenance record history from `HistoricalMaintenanceRecord.csv` and builds a Pandas DataFrame from it.  We then break out data into two DataFrames, `X` and `y`.  The `y` DataFrame contains the column `Label`, which is what we want to predict.  We use the `X` values of `Pressure` and `MachineTemperature` to make the best prediction of `Label` that we can.  Then, we break out data into training and test datasets and fit the training data to a decision tree (essentially, a series of if-else statements).  To gauge the quality of our simple model, we generate predictions against the test data set and compare those predicted scores to the actual values and print out the overall accuracy of the model.  After doing this, we serialize the model as a Pickle file and register this new model as `stamp_press_model`.
 
 7. After the **Compute** has been created, select **Run cell** on the cell. This will train and test a predictive maintenance model and then register the final model with Azure ML.
 
@@ -1098,6 +1102,8 @@ Now that IoT Hub is storing data, we can begin to process the sensor data messag
         }
     }
     ```
+
+    This function reads events from IoT Hub, which means we need the same `MessageBody` class that our edge devices created.  This function's purpose is to execute the `Run()` method, which deserializes the message into a `MessageBody` and wraps it in a `TelemetryOutput` object.  This wrapper includes several newly-created attributes which we will use to track data as it changes through the course of data processing.
 
 15. In the Visual Studio Code terminal, enter the following commands.
 
@@ -1511,6 +1517,14 @@ Events are loading into the `telemetry` container. Using that data, we can creat
     }
     ```
 
+    The code in this function collects data from a specified Cosmos DB collection and writes it to Postgres.  The `Run()` method triggers every time a new entry is added to the Cosmos DB collection `sensors.telemetry`.  There can be more than one document per `Run()` call, so we need to process each one individually.  We first convert the Cosmos telemetry record into a `TelemetryOutput` and deserialize the event's `MessageBody`.
+
+    Immediately after loading the telemetry record, we write it out to Postgres using `WriteTelemetryEventToPostgres`.  This method connects to Postgres using the `pg_connection` connection string and executes the `insertCommand` SQL statement to perform an insertion.
+
+    The next step is to call the Azure Machine Learning endpoint for the stamp press model.  This requires the machine temperature and pressure, which we can collect from the message.  We then call `GetMaintenancePrediction()` to make the HTTP request.  Azure Machine Learning returns back a list of predictions, but because we only sent one item's inputs, we expect to get only one result.
+
+    Once we have the maintenance prediction, we can write a new `TelemetryOutput` message to Postgres which contains the prediction as well as an Event Hub.
+
 5. In the Visual Studio Code terminal, enter the following commands.
 
     ```cmd
@@ -1552,48 +1566,44 @@ Duration: 15 minutes
 
 Your sensor data is flowing into the `telemetry_to_score` Event Hub and now you will enrich that data with automated anomaly detection by way of Azure Stream Analytics. The destination for this data will be the scored telemetry Cosmos DB container.
 
-### Task 1: Create an Azure Stream Analytics job
+### Task 1: Start an Azure Stream Analytics job
 
-1. In the [Azure portal](https://portal.azure.com), type in "stream analytics jobs" in the top search menu and then select **Stream Analytics jobs** from the results.
+1. Navigate to the **modernize-app** resource group in the [Azure portal](https://portal.azure.com).
 
-    ![In the Services search result list, Stream Analytics jobs is selected.](media/azure-stream-analytics-search.png 'Stream Analytics jobs')
+    ![The resource group named modernize-app is selected.](media/azure-modernize-app-rg.png 'The modernize-app resource group')
 
-2. In the Stream Analytics jobs page, select **+ New** to add a new container.  In the **New Stream Analytics job** tab, complete the following and then select **Create** to create the Stream Analytics job.
+    If you do not see the resource group in the Recent resources section, type in "resource groups" in the top search menu and then select **Resource groups** from the results.
 
-   | Field                          | Value                                              |
-   | ------------------------------ | ------------------------------------------         |
-   | Job name                       | _`modernize-app-stream`_                           |
-   | Subscription                   | _select the appropriate subscription_              |
-   | Resource group                 | _select `modernize-app`_                           |
-   | Location                       | _select the resource group's location_             |
-   | Hosting environment            | _select `Cloud`_                                   |
-   | Streaming units                | _select `3`_                                       |
+    ![In the Services search result list, Resource groups is selected.](media/azure-resource-group-search.png 'Resource groups')
 
-   ![In the New Stream Analytics job tab, form details are filled in.](media/azure-stream-analytics-create.png 'New Stream Analytics job')
+    From there, select the **modernize-app** resource group.
 
-3. After your deployment is complete, select **Go to resource** to open up the new Stream Analytics job.
+2. Navigate to the **modernize-app-stream** entry.
 
-4. In the **Configure** menu, select **Storage account settings**. Then, on the Storage account settings page, select **Add storage account**.
+    TODO:
+    ![In the modernize-app resource group, the Stream Analytics job is selected.](media/azure-stream-analytics-job.png 'Event Hubs Namespace')
+
+3. In the **Configure** menu, select **Storage account settings**. Then, on the Storage account settings page, select **Add storage account**.
 
     ![In the Configure menu, Storage account settings is selected, followed by the Add storage account option.](media/azure-stream-analytics-add-storage.png 'Add storage account')
 
-5. Choose the storage account you created before the hands-on lab, change the Authentication mode to **Connection string** and then select **Save**.
+4. Choose the storage account you created before the hands-on lab, change the Authentication mode to **Connection string** and then select **Save**.
 
     ![In the Storage account settings menu, the appropriate storage account is selected.](media/azure-stream-analytics-add-storage-2.png 'Select storage account')
 
-6. In the **Job topology** menu, select **Inputs**. Then, select **+ Add stream input** and choose **Event Hub**.
+5. In the **Job topology** menu, select **Inputs**. Then, select **+ Add stream input** and choose **Event Hub**.
 
     ![In Stream Analytics job inputs, Event Hub is selected.](media/azure-stream-analytics-input-eventhub.png 'Event Hub')
 
-7. In the **New input** tab, name your input `modernize-app-eventhub` and choose the appropriate IoT Hub that you created before the lab.  Ensure that the Event Hub name is **telemetry_to_score**.  Change the Event Hub consumer group to **Use existing** and select **anomalydetection** from the list. Leave the other settings at their default values and select **Save**.
+6. In the **New input** tab, name your input `modernize-app-eventhub` and choose the appropriate IoT Hub that you created before the lab.  Ensure that the Event Hub name is **telemetry_to_score**.  Change the Event Hub consumer group to **Use existing** and select **anomalydetection** from the list. Leave the other settings at their default values and select **Save**.
 
    ![In the New input tab, form details are filled in.](media/azure-stream-analytics-input-eventhub-2.png 'Event Hub')
 
-8. In the **Job topology** menu, select **Outputs**. Then, select **+ Add** and choose **Cosmos DB**.
+7. In the **Job topology** menu, select **Outputs**. Then, select **+ Add** and choose **Cosmos DB**.
 
     ![In Stream Analytics job outputs, Cosmos DB is selected.](media/azure-stream-analytics-output-cosmos1.png 'Cosmos DB')
 
-9. In the **New output** window, complete the following:
+8. In the **New output** window, complete the following:
 
    | Field                          | Value                                              |
    | ------------------------------ | ------------------------------------------         |
@@ -1605,13 +1615,13 @@ Your sensor data is flowing into the `telemetry_to_score` Event Hub and now you 
 
    ![In the Cosmos DB new output, form field entries are filled in.](media/azure-stream-analytics-output-cosmos1-2.png 'Cosmos DB output')
 
-10. Select **Save** to add the new output.
+9. Select **Save** to add the new output.
 
-11. In the **Job topology** menu, select **Functions**.  Then, select **+ Add** to create a new user-defined function and choose **Javascript UDF** from the drop-down list.
+10. In the **Job topology** menu, select **Functions**.  Then, select **+ Add** to create a new user-defined function and choose **Javascript UDF** from the drop-down list.
 
     ![The option to add a new JavaScript user-defined function is selected.](media/azure-stream-analytics-new-function.png 'Stream Analytics function')
 
-12. Fill in **parseJson** for the Function alias and replace the sample UDF with the following code.
+11. Fill in **parseJson** for the Function alias and replace the sample UDF with the following code.
 
     ```javascript
     function parseJson(string) {
@@ -1625,11 +1635,11 @@ Your sensor data is flowing into the `telemetry_to_score` Event Hub and now you 
 
     ![The parseJson function is created.](media/azure-stream-analytics-new-function-2.png 'parseJson function')
 
-13. In the **Job topology** menu, select **Query**. You should see the input and output that you created, as well as sample events from Event Hub. If you do not see sample events, select the **modernize-app-eventhub** input.
+12. In the **Job topology** menu, select **Query**. You should see the input and output that you created, as well as sample events from Event Hub. If you do not see sample events, select the **modernize-app-eventhub** input.
 
     ![In the Stream Analytics query, inputs and ouptuts, as well as sample data, are visible.](media/azure-stream-analytics-query.png 'Stream Analytics query')
 
-14. In the query window, replace the existing query text with the following code.
+13. In the query window, replace the existing query text with the following code.
 
     ```sql
     WITH RawData AS
@@ -1670,13 +1680,15 @@ Your sensor data is flowing into the `telemetry_to_score` Event Hub and now you 
         AND CAST(GetRecordPropertyValue(SpikeAndDipResult, 'Score') AS float)  < 0.001;
     ```
 
-15. Select **Test query** to ensure that the queries run. You will see only the results of the last query in the Test results window and only the inputs and outputs you created in the Inputs and Outputs sections, respectively. If you want to see the results of a different query, highlight that query and select **Test selected query**.
+    In the `RawData` common table expression, we parse the event data JSON to obtain the machine temperature.  We can use that temperature in the `AnomalyDetectionStep` common table expression to perform spike and dip analysis of temperature for anomalies.  We want to analyze temperature with a confidence of 80% or better and looking back at the last 60 data points over a five-minute period.  In the main query, we write data if Azure Cognitive Services deems a given result as anomalous and if its score is sufficiently low that we expect it not to be a false positive.  These anomalous results will be written into Cosmos DB for later processing.
+
+14. Select **Test query** to ensure that the queries run. You will see only the results of the last query in the Test results window and only the inputs and outputs you created in the Inputs and Outputs sections, respectively. If you want to see the results of a different query, highlight that query and select **Test selected query**.
 
     ![Testing the queries in stream analytics.](media/azure-stream-analytics-test-query.png 'Test query')
 
-16. Once you are satisfied with query results, select **Save query** to save your changes.
+15. Once you are satisfied with query results, select **Save query** to save your changes.
 
-17. Return to the **Overview** page and select **Start** to begin processing. In the subsequent menu, select **Start** once more. It may take approximately 1-2 minutes for the Stream Analytics job to start.
+16. Return to the **Overview** page and select **Start** to begin processing. In the subsequent menu, select **Start** once more. It may take approximately 1-2 minutes for the Stream Analytics job to start.
 
     ![The Start option in the Overview page is selected.](media/azure-stream-analytics-start.png 'Start')
 
@@ -1791,6 +1803,8 @@ Your sensor data is flowing into the `telemetry_to_score` Event Hub and now you 
         }
     }
     ```
+
+    For this Azure function, the `Run()` method reads the `sensors.scored_telemetry` collection for new anomalies and writes these to Postgres.
 
 4. In the Visual Studio Code terminal, enter the following commands.
 
@@ -2131,7 +2145,9 @@ In this final exercise, you will load data from Cosmos DB containers into an Azu
     dfFlat.show(10)
     ```
 
-    Then, run the code block by selecting **Run** (shaped like a play button) or by pressing `Shift+Enter` when inside the notebook cell. After the job completes, you should see a table with the first ten anomalous results, assuming there are at least ten anomalous results by the time you reach this step.
+    The `df` DataFrame loads data from the `telemetry` container and selects the `event_data` column.  Then, we determine the schema of the `event_data` JSON by parsing the first row.  After figuring out the schema, we flatten the JSON and include several columns.
+
+    Now, run the code block by selecting **Run** (shaped like a play button) or by pressing `Shift+Enter` when inside the notebook cell. After the job completes, you should see a table with the first ten anomalous results, assuming there are at least ten anomalous results by the time you reach this step.
 
     ![Code to connect to Cosmos DB is entered and ready to run.](media/azure-synapse-develop-cosmos-connect.png 'Connect to Cosmos DB from a notebook')
 
@@ -2141,13 +2157,13 @@ In this final exercise, you will load data from Cosmos DB containers into an Azu
 
     ```scala
     // Ensure that this table does not already exist on your SQL Pool; otherwise, you will get an error!
-    dfFlat.write.sqlanalytics("modernapp.dbo.MachineTelemetry", Constants.INTERNAL)
+    dfFlat.write.synapsesql("modernapp.dbo.MachineTelemetry", Constants.INTERNAL)
     ```
 
 14. After the code segment completes, select **{ } Add Code** and add a new block with the following code to ensure that the SQL pool has loaded correctly.
 
     ```scala
-    val sqldf = spark.read.sqlanalytics("modernapp.dbo.MachineTelemetry") 
+    val sqldf = spark.read.synapsesql("modernapp.dbo.MachineTelemetry") 
     sqldf.show(10)
     ```
 
