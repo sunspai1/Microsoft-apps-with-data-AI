@@ -91,7 +91,7 @@ In this task, you will use the Azure Portal to create a new Azure Resource Group
 
 3. In the left-hand menu, select **Resource Groups**.
 
-4. At the top of the screen select the **Add** button.
+4. At the top of the screen select the **+ New** option to add a new resource group.
 
    ![Add Resource Group Menu](media/add-resource-group-menu.png 'Resource Group Menu')
 
@@ -121,25 +121,22 @@ Azure Data Lake Storage Gen2 will be critical for several integration points thr
    | Resource group                 | _select `modernize-app`_                    |
    | Storage account name           | _`modernizeappstorage#SUFFIX#`_             |
    | Location                       | _select the resource group's location_      |
-   | Pricing tier                   | _select Standard_                           |
-   | Account kind                   | _select StorageV2 (general purpose v2)_     |
+   | Performance                    | _select Standard_                           |
    | Replication                    | _select Locally-redundant storage (LRS)_    |
 
     > **Note**: Please replace the `#SUFFIX#` tag in the storage account name with a suffix you would like to use. Names of storage accounts must be globally unique.
 
     ![The form fields are completed with the previously described settings.](media/azure-create-storage-account-1.png 'Storage Account Settings')
 
-    Then select **Next : Networking >**.
+    Then select **Next : Advanced >**.
 
-5. Leave the networking settings at their default values: a connectivity method of **Public endpoint (all networks)** and a network routing preference of **Microsoft network routing (default)**.  Select **Next : Data protection >** and leave these settings at their default values.
-
-6. Select the **Advanced** tab in the menu, bypassing **Data protection**. In the Data Lake Gen2 section, enable **Hierarchical namespace**.
+5. Select the **Advanced** tab in the menu, bypassing **Data protection**. In the Data Lake Gen2 section, enable **Hierarchical namespace**.
 
     ![The Hierarchical namespace option is enabled.](media/azure-create-storage-account-2.png 'Storage Account Advanced Settings')
 
     >**Note**: Here, you may need to configure the **Blob access tier (default)** as **Hot**.
 
-7. Select **Review + create**. On the review screen, select **Create**.
+6. Select **Review + create**. On the review screen, select **Create**.
 
 ### Task 3: Provision an IoT Hub
 
@@ -285,21 +282,21 @@ The hands-on lab will use Cosmos DB as a key component in the event sourcing arc
 
 2. Select **+ New** on the Azure Cosmos DB page.
 
-3. Within the **Create Azure Cosmos DB Account** form, complete the following:
+3. On the Select API option menu, choose **Core (SQL)** and select **Create**.
+
+    ![Create a Core/SQL API Cosmos DB collection.](media/azure-create-cosmos-db-choose.png 'Cosmos DB')
+
+4. Within the **Create Azure Cosmos DB Account** form, complete the following:
 
    | Field                          | Value                                       |
    | ------------------------------ | ------------------------------------------  |
    | Subscription                   | _select the appropriate subscription_       |
    | Resource group                 | _select `modernize-app`_                    |
    | Account name                   | _`modernize-app-#SUFFIX#`_                  |
-   | API                            | _select `Core (SQL)`_                       |
    | Location                       | _select the resource group's location_      |
    | Capacity mode                  | _select `Provisioned throughput`_           |
    | Apply Free Tier Discount       | _select `Apply` if available_               |
    | Account Type                   | _select `Non-Production`_                   |
-   | Geo-Redundancy                 | _select `Disable`_                          |
-   | Multi-region Writes            | _select `Disable`_                          |
-   | Availability Zones             | _select `Disable`_                          |
 
    > **Note**: Please replace the `#SUFFIX#` tag in the account name with a suffix you would like to use. Names of Cosmos DB accounts must be globally unique.
 
@@ -307,7 +304,7 @@ The hands-on lab will use Cosmos DB as a key component in the event sourcing arc
 
    ![The form fields are completed with the previously described settings.](media/azure-create-cosmos-db-1.png 'Cosmos DB Settings')
 
-4. Select **Review + create**. On the review screen, select **Create**. This may take 15 minutes or so to complete and while it deploys, you may continue on to other tasks.
+5. Select **Review + create**. On the review screen, select **Create**. This may take 15 minutes or so to complete and while it deploys, you may continue on to other tasks.
 
 ### Task 7: Provision a Function App
 
@@ -359,6 +356,7 @@ In this task, you will deploy a new Azure Database for PostgreSQL, selecting the
    | ------------------------------ | ------------------------------------------  |
    | Subscription                   | _select the appropriate subscription_       |
    | Resource group                 | _select `modernize-app`_                    |
+   | Preview features               | _select Enable preview features_            |
    | Server group name              | _`modernize-app-#SUFFIX#`_                  |
    | Location                       | _select the resource group's location_      |
    | Password                       | _enter a valid password you will remember_  |
@@ -367,9 +365,13 @@ In this task, you will deploy a new Azure Database for PostgreSQL, selecting the
 
    ![The form fields are completed with the previously described settings.](media/azure-create-postgres-2.png 'Hyperscale (Citus) server group')
 
-5. Select **Configure server group**. Leave the settings in that section unchanged and select **Save**.
+5. Select **Configure server group**.  Select the **Basic** tier and leave settings at their lowest levels.  Then, select **Save**.
+
+    ![The form fields are completed with the previously described settings.](media/azure-create-postgres-2b.png 'Compute + storage')
 
 6. Select **Review + create** and then **Create** to provision the server. Provisioning takes **up to 10** minutes.
+
+    > **Note**: If you are prompted to configure the IP address in firewall rules, select **Create server group without firewall rules** to continue; we will configure these rules after provisioning.
 
 7. Select **Overview** to view the deployment details, then select **Go to resource**.
 
@@ -383,7 +385,7 @@ In this task, you will deploy a new Azure Database for PostgreSQL, selecting the
 
     ![The overview page shows the Coordinator name value after deployment is complete.](media/azure-create-postgres-3.png 'Coordinator name')
 
-9. Select **Networking** in the left-hand menu underneath Security. In the Firewall rules blade, select **Yes** to *allow Azure services and resources to access this server group*, then select the **+ Add 0.0.0.0 - 255.255.255.255** link to create a new firewall rule to allow all connections (from your machine and Azure services).
+9. Select **Networking** in the left-hand menu underneath Settings. In the Firewall rules blade, select **Yes** to *allow Azure services and resources to access this server group*, then select the **+ Add 0.0.0.0 - 255.255.255.255** link to create a new firewall rule to allow all connections (from your machine and Azure services).
 
    ![The Firewall rules blade is displayed.](media/azure-create-postgres-6.png 'Firewall rules')
 
