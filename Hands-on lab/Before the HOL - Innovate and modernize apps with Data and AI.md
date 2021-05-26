@@ -71,6 +71,8 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
 
 6. Install [Power BI Desktop](https://aka.ms/pbidesktopstore).
 
+7. Install the latest version of [the .NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet/3.1).
+
 ## Before the hands-on lab
 
 Duration: 40 minutes
