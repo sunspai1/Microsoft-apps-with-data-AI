@@ -33,6 +33,10 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
   - [Solution architecture](#solution-architecture)
   - [Requirements](#requirements)
   - [Before the hands-on lab](#before-the-hands-on-lab)
+  - [Exercise 0: Finish configuring Azure services and retrieve values](#exercise-0-finish-configuring-azure-services-and-retrieve-values)
+    - [Task 1: Copy Azure Container Registry access keys](#task-1-copy-azure-container-registry-access-keys)
+    - [Task 2: Copy Azure Database for PostgreSQL coordinator name](#task-2-copy-azure-database-for-postgresql-coordinator-name)
+    - [Task 3: Copy Event Hub connection string](#task-3-copy-event-hub-connection-string)
   - [Exercise 1: Deploy a factory load simulator](#exercise-1-deploy-a-factory-load-simulator)
     - [Task 1: Add a new device in IoT Hub](#task-1-add-a-new-device-in-iot-hub)
     - [Task 2: Install and configure IoT Edge on a Linux virtual machine](#task-2-install-and-configure-iot-edge-on-a-linux-virtual-machine)
@@ -123,6 +127,60 @@ The web app is a modernized version of WWI's old monolithic web app, implementin
 ## Before the hands-on lab
 
 Refer to the Before the hands-on lab setup guide manual before continuing to the lab exercises.
+
+## Exercise 0: Finish configuring Azure services and retrieve values
+
+Duration: 5 minutes
+
+### Task 1: Copy Azure Container Registry access keys
+
+The container registry will store container images you will create during the hands-on lab.
+
+1. Navigate to the **modernize-app** resource group in the [Azure portal](https://portal.azure.com).
+
+    ![The resource group named modernize-app is selected.](media/azure-modernize-app-rg.png 'The modernize-app resource group')
+
+    If you do not see the resource group in the Recent resources section, type in "resource groups" in the top search menu and then select **Resource groups** from the results.
+
+    ![In the Services search result list, Resource groups is selected.](media/azure-resource-group-search.png 'Resource groups')
+
+    From there, select the **modernize-app** resource group.
+
+6. In the **Settings** section on the menu, select **Access keys**.  Then, on the Access keys page, **Enable** the Admin user.
+
+    ![The Admin user is enabled for the container registry.](media/azure-create-container-registry-2.png 'Container registry Access keys')
+
+### Task 2: Copy Azure Database for PostgreSQL coordinator name
+
+In this task, you will deploy a new Azure Database for PostgreSQL, selecting the Hyperscale (Citus) option.
+
+7. Select **Overview** to view the deployment details, then select **Go to resource**.
+
+   ![The Overview menu item and Go to resource button are both highlighted.](media/azure-create-postgres-4.png 'Deployment overview')
+
+   If you are redirected to the Resource Group instead of the Azure Database for PostgreSQL server group, select the server group to continue to the next step.
+
+   ![The Azure Database for PostgreSQL server group is highlighted.](media/azure-create-postgres-5.png 'Resource Group')
+
+8. Copy the **Coordinator name** to the clipboard.  Record this information for later use.
+
+    ![The overview page shows the Coordinator name value after deployment is complete.](media/azure-create-postgres-3.png 'Coordinator name')
+
+9. Select **Networking** in the left-hand menu underneath Settings. In the Firewall rules blade, select **Yes** to *allow Azure services and resources to access this server group*, then select the **+ Add 0.0.0.0 - 255.255.255.255** link to create a new firewall rule to allow all connections (from your machine and Azure services).
+
+   ![The Firewall rules blade is displayed.](media/azure-create-postgres-6.png 'Firewall rules')
+
+10. Select **Save** to apply the new firewall rule.
+
+### Task 3: Copy Event Hub connection string
+
+6. In the Event Hubs Namespace, select **Shared access policies** in the Settings menu and then select the **RootManageSharedAccessKey**.
+
+    ![The shared access key is selected.](media/azure-event-hub-policy.png 'Shared Access Key')
+
+7. In the SAS Policy screen, copy the primary key connection string and save it to Notepad or another text editor.
+
+    ![The primary connection string is selected.](media/azure-event-hub-connection-string.png 'Connection String - Primary Key')
 
 ## Exercise 1: Deploy a factory load simulator
 
