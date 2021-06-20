@@ -104,14 +104,12 @@ The below ARM template deploys several Azure resources for the labs, including A
 
    - **Subscription**: Select your desired subscription for the deployment.
    - **Resource group**: Select the resource group you previously created.
-   - **Region**: The region where your Azure Synapse environment will be created.
-
-        > **Important**: The `Region` field under 'Parameters' will list the Azure regions where Azure Synapse Analytics is available as of November 2020. This will help you find a region where the service is available without being limited to where the resource group is defined.
+   - **Region**: The region where your Azure resources will be created.
 
    - **Unique Suffix**: This unique suffix will be used naming resources that will created as part of your deployment, such as your initials followed by the current date in YYYYMMDD format (ex. `jdh20210615`). Make sure you follow correct Azure [Resource naming](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging#resource-naming) conventions.
-   - **SQL Administrator Login Password**: Provide a strong password for the SQLPool that will be created as part of your deployment. [Visit here](https://docs.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-ver15#password-complexity) to read about password rules in place. Your password will be needed during the next steps. Make sure you have your password noted and secured.
+   - **SQL Administrator Login Password**: Provide a strong password for the Azure Synapse Analytics dedicated SQL pool **and** PostgreSQL database user that will be created as part of your deployment. [Visit here](https://docs.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-ver15#password-complexity) to read about password rules in place. Your password will be needed during the lab. Make sure you have your password noted and secured.
 
-   ![The form is configured as described.](media/synapse-arm-template.png "Deploy an Azure Synapse Analytics workspace")
+   ![The form is configured as described.](media/synapse-arm-template.png "Deploy Azure resources")
 
 3. Select the **Review + create** button, then **Create**. The provisioning of your deployment resources will take approximately 6 minutes.
 

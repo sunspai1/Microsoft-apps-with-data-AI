@@ -775,10 +775,10 @@
           },
           "properties": {
               "friendlyName": "[variables('mlWorkspaceName')]",
-              "storageAccount": "[variables('mlStorageName')]",
-              "keyVault": "[variables('keyVaultName')]",
-              "applicationInsights": "[variables('applicationInsightsName')]",
-              "containerRegistry": "[if(empty(variables('containerRegistryName')), json('null'), variables('containerRegistryName'))]"
+              "storageAccount": "[resourceId('Microsoft.Storage/storageAccounts', variables('mlStorageName'))]",
+              "keyVault": "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]",
+              "applicationInsights": "[resourceId('Microsoft.Insights/components', variables('applicationInsightsName'))]",
+              "containerRegistry": "[resourceId('Microsoft.ContainerRegistry/registries', variables('containerRegistryName'))]"
           }
       }
     ],

@@ -154,31 +154,29 @@ The container registry will store container images you will create during the ha
 
 In this task, you will deploy a new Azure Database for PostgreSQL, selecting the Hyperscale (Citus) option.
 
-7. Select **Overview** to view the deployment details, then select **Go to resource**.
-
-   ![The Overview menu item and Go to resource button are both highlighted.](media/azure-create-postgres-4.png 'Deployment overview')
-
-   If you are redirected to the Resource Group instead of the Azure Database for PostgreSQL server group, select the server group to continue to the next step.
+1. Navigate back to the lab resource group and select the Azure Database for PostgreSQL server group.
 
    ![The Azure Database for PostgreSQL server group is highlighted.](media/azure-create-postgres-5.png 'Resource Group')
 
-8. Copy the **Coordinator name** to the clipboard.  Record this information for later use.
+2. Copy the **Coordinator name** to the clipboard.  Record this information for later use.
 
     ![The overview page shows the Coordinator name value after deployment is complete.](media/azure-create-postgres-3.png 'Coordinator name')
 
-9. Select **Networking** in the left-hand menu underneath Settings. In the Firewall rules blade, select **Yes** to *allow Azure services and resources to access this server group*, then select the **+ Add 0.0.0.0 - 255.255.255.255** link to create a new firewall rule to allow all connections (from your machine and Azure services).
+3. Select **Networking** in the left-hand menu underneath Settings. In the Firewall rules blade, select **Yes** to *allow Azure services and resources to access this server group*.
 
    ![The Firewall rules blade is displayed.](media/azure-create-postgres-6.png 'Firewall rules')
 
-10. Select **Save** to apply the new firewall rule.
+4. Select **Save** to apply the new firewall rule.
 
 ### Task 3: Copy Event Hub connection string
 
-6. In the Event Hubs Namespace, select **Shared access policies** in the Settings menu and then select the **RootManageSharedAccessKey**.
+1. Navigate back to the lab resource group and select the Event Hubs Namespace.
+
+2. In the Event Hubs Namespace, select **Shared access policies** in the Settings menu and then select the **RootManageSharedAccessKey**.
 
     ![The shared access key is selected.](media/azure-event-hub-policy.png 'Shared Access Key')
 
-7. In the SAS Policy screen, copy the primary key connection string and save it to Notepad or another text editor.
+3. In the SAS Policy screen, copy the primary key connection string and save it to Notepad or another text editor.
 
     ![The primary connection string is selected.](media/azure-event-hub-connection-string.png 'Connection String - Primary Key')
 
