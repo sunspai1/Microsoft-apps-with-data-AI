@@ -9,7 +9,7 @@ Hands-on lab step-by-step
 </div>
 
 <div class="MCWHeader3">
-August 2020
+June 2021
 </div>
 
 
@@ -19,7 +19,7 @@ Microsoft may have patents, patent applications, trademarks, copyrights, or othe
 
 The names of manufacturers, products, or URLs are provided for informational purposes only and Microsoft makes no representations and warranties, either expressed, implied, or statutory, regarding these manufacturers or the use of the products with any Microsoft technologies. The inclusion of a manufacturer or product does not imply endorsement of Microsoft of the manufacturer or product. Links may be provided to third party sites. Such sites are not under the control of Microsoft and Microsoft is not responsible for the contents of any linked site or any link contained in a linked site, or any changes or updates to such sites. Microsoft is not responsible for webcasting or any other form of transmission received from any linked site. Microsoft is providing these links to you only as a convenience, and the inclusion of any link does not imply endorsement of Microsoft of the site or the products contained therein.
 
-© 2020 Microsoft Corporation. All rights reserved.
+© 2021 Microsoft Corporation. All rights reserved.
 
 Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellectualproperty/Trademarks/Usage/General.aspx> are trademarks of the Microsoft group of companies. All other trademarks are property of their respective owners.
 
@@ -33,36 +33,40 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
   - [Solution architecture](#solution-architecture)
   - [Requirements](#requirements)
   - [Before the hands-on lab](#before-the-hands-on-lab)
-  - [Exercise 1: Deploy a factory load simulator](#exercise-1-deploy-a-factory-load-simulator)
+  - [Exercise 1: Finish configuring Azure services and retrieve values](#exercise-1-finish-configuring-azure-services-and-retrieve-values)
+    - [Task 1: Copy Azure Container Registry access keys](#task-1-copy-azure-container-registry-access-keys)
+    - [Task 2: Copy Azure Database for PostgreSQL coordinator name](#task-2-copy-azure-database-for-postgresql-coordinator-name)
+    - [Task 3: Copy Event Hub connection string](#task-3-copy-event-hub-connection-string)
+  - [Exercise 2: Deploy a factory load simulator](#exercise-2-deploy-a-factory-load-simulator)
     - [Task 1: Add a new device in IoT Hub](#task-1-add-a-new-device-in-iot-hub)
     - [Task 2: Install and configure IoT Edge on a Linux virtual machine](#task-2-install-and-configure-iot-edge-on-a-linux-virtual-machine)
     - [Task 3: Build and deploy an IoT Edge module](#task-3-build-and-deploy-an-iot-edge-module)
-  - [Exercise 2: Use Azure Machine Learning to train and register a predictive maintenance model](#exercise-2-use-azure-machine-learning-to-train-and-register-a-predictive-maintenance-model)
+  - [Exercise 3: Use Azure Machine Learning to train and register a predictive maintenance model](#exercise-3-use-azure-machine-learning-to-train-and-register-a-predictive-maintenance-model)
     - [Task 1: Load historical maintenance data](#task-1-load-historical-maintenance-data)
     - [Task 2: Create a new Azure Machine Learning Datastore](#task-2-create-a-new-azure-machine-learning-datastore)
     - [Task 3: Develop the predictive maintenance model](#task-3-develop-the-predictive-maintenance-model)
     - [Task 4: Deploy the predictive maintenance model](#task-4-deploy-the-predictive-maintenance-model)
     - [Task 5: Test the predictive maintenance model](#task-5-test-the-predictive-maintenance-model)
-  - [Exercise 3:  Create an Azure Function to send event telemetry to Cosmos DB](#exercise-3--create-an-azure-function-to-send-event-telemetry-to-cosmos-db)
+  - [Exercise 4:  Create an Azure Function to send event telemetry to Cosmos DB](#exercise-4--create-an-azure-function-to-send-event-telemetry-to-cosmos-db)
     - [Task 1: Enable Azure Synapse Link for Cosmos DB](#task-1-enable-azure-synapse-link-for-cosmos-db)
     - [Task 2: Create Cosmos DB containers](#task-2-create-cosmos-db-containers)
     - [Task 3: Create an Azure Function to write event data to Cosmos DB](#task-3-create-an-azure-function-to-write-event-data-to-cosmos-db)
     - [Task 4: Deploy and configure an Azure Function](#task-4-deploy-and-configure-an-azure-function)
-  - [Exercise 4:  Enrich event telemetry with predictive maintenance results](#exercise-4--enrich-event-telemetry-with-predictive-maintenance-results)
+  - [Exercise 5:  Enrich event telemetry with predictive maintenance results](#exercise-5--enrich-event-telemetry-with-predictive-maintenance-results)
     - [Task 1:  Create an Event Hub](#task-1--create-an-event-hub)
     - [Task 2: Create an events table in PostgreSQL](#task-2-create-an-events-table-in-postgresql)
     - [Task 3: Create an Azure Function based on a Cosmos DB trigger](#task-3-create-an-azure-function-based-on-a-cosmos-db-trigger)
-  - [Exercise 5:  Enrich event telemetry with automated anomaly detection](#exercise-5--enrich-event-telemetry-with-automated-anomaly-detection)
+  - [Exercise 6:  Enrich event telemetry with automated anomaly detection](#exercise-6--enrich-event-telemetry-with-automated-anomaly-detection)
     - [Task 1: Start an Azure Stream Analytics job](#task-1-start-an-azure-stream-analytics-job)
-  - [Exercise 6:  Send scored telemetry data to PostgreSQL](#exercise-6--send-scored-telemetry-data-to-postgresql)
+  - [Exercise 7:  Send scored telemetry data to PostgreSQL](#exercise-7--send-scored-telemetry-data-to-postgresql)
     - [Task 1: Create an Azure Function to write temperature anomalies data to PostgreSQL](#task-1-create-an-azure-function-to-write-temperature-anomalies-data-to-postgresql)
     - [Task 2: Deploy and configure an Azure Function](#task-2-deploy-and-configure-an-azure-function)
-  - [Exercise 7: Modernize services logic to use event sourcing and CQRS](#exercise-7-modernize-services-logic-to-use-event-sourcing-and-cqrs)
+  - [Exercise 8: Modernize services logic to use event sourcing and CQRS](#exercise-8-modernize-services-logic-to-use-event-sourcing-and-cqrs)
     - [Task 1: Build and push the containers](#task-1-build-and-push-the-containers)
     - [Task 2: Create a deployment file](#task-2-create-a-deployment-file)
     - [Task 3: Deploy the container group](#task-3-deploy-the-container-group)
     - [Task 4: Migrate the Change Feed Processor Function to a Container](#task-4-migrate-the-change-feed-processor-function-to-a-container)
-  - [Exercise 8: View the factory status in a Power BI report](#exercise-8-view-the-factory-status-in-a-power-bi-report)
+  - [Exercise 9: View the factory status in a Power BI report](#exercise-9-view-the-factory-status-in-a-power-bi-report)
     - [Task 1: Import events data via a Spark notebook](#task-1-import-events-data-via-a-spark-notebook)
     - [Task 2: Create a Power BI notebook](#task-2-create-a-power-bi-notebook)
     - [Task 3: Embed the Power BI notebook](#task-3-embed-the-power-bi-notebook)
@@ -124,7 +128,61 @@ The web app is a modernized version of WWI's old monolithic web app, implementin
 
 Refer to the Before the hands-on lab setup guide manual before continuing to the lab exercises.
 
-## Exercise 1: Deploy a factory load simulator
+## Exercise 1: Finish configuring Azure services and retrieve values
+
+Duration: 5 minutes
+
+### Task 1: Copy Azure Container Registry access keys
+
+The container registry will store container images you will create during the hands-on lab.
+
+1. Navigate to the **modernize-app** resource group in the [Azure portal](https://portal.azure.com).
+
+    ![The resource group named modernize-app is selected.](media/azure-modernize-app-rg.png 'The modernize-app resource group')
+
+    If you do not see the resource group in the Recent resources section, type in "resource groups" in the top search menu and then select **Resource groups** from the results.
+
+    ![In the Services search result list, Resource groups is selected.](media/azure-resource-group-search.png 'Resource groups')
+
+    From there, select the **modernize-app** resource group.
+
+6. In the **Settings** section on the menu, select **Access keys**.  Then, on the Access keys page, **Enable** the Admin user.
+
+    ![The Admin user is enabled for the container registry.](media/azure-create-container-registry-2.png 'Container registry Access keys')
+
+### Task 2: Copy Azure Database for PostgreSQL coordinator name
+
+In this task, you will deploy a new Azure Database for PostgreSQL, selecting the Hyperscale (Citus) option.
+
+1. Navigate back to the lab resource group and select the Azure Database for PostgreSQL server group.
+
+   ![The Azure Database for PostgreSQL server group is highlighted.](media/azure-create-postgres-5.png 'Resource Group')
+
+2. Copy the **Coordinator name** to the clipboard.  Record this information for later use.
+
+    ![The overview page shows the Coordinator name value after deployment is complete.](media/azure-create-postgres-3.png 'Coordinator name')
+
+3. Select **Networking** in the left-hand menu underneath Settings. In the Firewall rules blade, select **Yes** to *allow Azure services and resources to access this server group*.
+
+   ![The Firewall rules blade is displayed.](media/azure-create-postgres-6.png 'Firewall rules')
+
+4. Select **Save** to apply the new firewall rule.
+
+### Task 3: Copy Event Hub connection string
+
+1. Navigate back to the lab resource group and select the Event Hubs Namespace.
+
+    ![The Event Hubs Namespace in the resource group is highlighted.](media/rg-event-hubs.png "Event Hubs Namespace")
+
+2. In the Event Hubs Namespace, select **Shared access policies** in the Settings menu and then select the **RootManageSharedAccessKey**.
+
+    ![The shared access key is selected.](media/azure-event-hub-policy.png 'Shared Access Key')
+
+3. In the SAS Policy screen, copy the primary key connection string and save it to Notepad or another text editor.
+
+    ![The primary connection string is selected.](media/azure-event-hub-connection-string.png 'Connection String - Primary Key')
+
+## Exercise 2: Deploy a factory load simulator
 
 Duration: 40 minutes
 
@@ -166,11 +224,11 @@ The first task is to register a new IoT Edge device in IoT Hub.
 
     ![In the modernize-app-ubuntu1 settings, the copy action for the Primary Connection String is selected.](media/azure-modernize-app-ubuntu1-cs.png 'The primary connection string for the modernize-app-ubuntu1 IoT device')
 
-8. Select **Built-in endpoints** from the Settings menu and navigate to the **Event Hub compatible endpoint** section. Copy the Event Hub-compatible endpoint and paste it into Notepad or another text editor. You will use this endpoint in Exercise 3.
+8. Select **Built-in endpoints** from the Settings menu and navigate to the **Event Hub compatible endpoint** section. Copy the Event Hub-compatible endpoint and paste it into Notepad or another text editor. You will use this endpoint in Exercise 4.
 
     ![In the Event Hub compatible endpoint settings, the endpoint connection string is selected.](media/azure-iot-hub-endpoint.png 'The Event Hub-compatible endpoint')
 
-9. In the Consumer Groups section, add a new consumer group named **telemetry** by entering the name into the **Create new consumer group** textbox.  IoT Hub will automatically save and register this consumer group, which we will use in Exercise 3.
+9. In the Consumer Groups section, add a new consumer group named **telemetry** by entering the name into the **Create new consumer group** textbox.  IoT Hub will automatically save and register this consumer group, which we will use in Exercise 4.
 
     ![In the Event Hub Consumer Groups settings, a new telemetry consumer group is added.](media/azure-iot-hub-consumer-group.png 'Consumer Groups')
 
@@ -637,11 +695,11 @@ The instructions in this task come from the guide on [how to install IoT Edge on
 
     ![The modernize-app-ubuntu1 device is returning a 200 response code and reports that the WWIFactorySensorModule is installed.](media/azure-modernize-app-ubuntu1-status.png 'Status for the modernize-app-ubuntu1 device')
 
-## Exercise 2: Use Azure Machine Learning to train and register a predictive maintenance model
+## Exercise 3: Use Azure Machine Learning to train and register a predictive maintenance model
 
 Duration: 40 minutes
 
-Now that your data is streaming into Azure IoT Hub, it is time to train and build a model to predict whether machine maintenance is required. This model will become a valuable part of data enrichment in Exercise 4.
+Now that your data is streaming into Azure IoT Hub, it is time to train and build a model to predict whether machine maintenance is required. This model will become a valuable part of data enrichment in Exercise 5.
 
 ### Task 1: Load historical maintenance data
 
@@ -873,7 +931,7 @@ Now that your data is streaming into Azure IoT Hub, it is time to train and buil
 
     Like any realistic data set, the historical maintenance record is imperfect and so the data your model trained on will include some incorrect maintenance operations, leading to incorrect maintenance recommendations. Try a few values near the edges of pressure and machine temperature to see.
 
-## Exercise 3:  Create an Azure Function to send event telemetry to Cosmos DB
+## Exercise 4:  Create an Azure Function to send event telemetry to Cosmos DB
 
 Duration: 30 minutes
 
@@ -1017,7 +1075,7 @@ Now that IoT Hub is storing data, we can begin to process the sensor data messag
     "cosmosPrimaryKey": "{ Your Comsos DB account's primary key }",
     ```
 
-    >**Note**: The Event Hub compatible endpoint can be found in the **Built-in endpoints** selection in the Settings menu for IoT Hub if you did not collect that information in Exercise 1.
+    >**Note**: The Event Hub compatible endpoint can be found in the **Built-in endpoints** selection in the Settings menu for IoT Hub if you did not collect that information in Exercise 2.
 
     ![The new local settings are filled in.](media/azure-function-local-settings.png 'local.settings.json')
 
@@ -1160,7 +1218,7 @@ Now that IoT Hub is storing data, we can begin to process the sensor data messag
    | ------------------------------ | ------------------------------------------         |
    | cosmosEndpointUrl              | _enter the Cosmos DB URL, something like `https://modernize-app-#SUFFIX#.documents.azure.com:443/`_ |
    | cosmosPrimaryKey               | _enter the primary key for your Cosmos DB account_ |
-   | azureMLEndpointUrl             | _enter the URL (with /score) from exercise 2_      |
+   | azureMLEndpointUrl             | _enter the URL (with /score) from exercise 3_      |
    | modernizeapp\_COSMOSDB         | _`AccountEndpoint=https://modernize-app-#SUFFIX#.documents.azure.com:443/;AccountKey={PRIMARY KEY};`_ |
    | pg\_connection                  | _`Server={modernize-app-c.postgres.database.azure.com}; Port=5432; Database=citus; Username=citus; Password={your_password}; SSL Mode=Require; Trust Server Certificate=true`_ |
    | IoTHubTriggerConnection        | _enter the Event Hub compatible endpoint for your IoT Hub_ |
@@ -1172,7 +1230,7 @@ Now that IoT Hub is storing data, we can begin to process the sensor data messag
 
 9. Return to the **Overview** menu and then **Stop** and **Start** the Azure Function. This will allow the function to pick up your new application settings and begin publishing data to Cosmos DB.
 
-## Exercise 4:  Enrich event telemetry with predictive maintenance results
+## Exercise 5:  Enrich event telemetry with predictive maintenance results
 
 Duration: 30 minutes
 
@@ -1304,7 +1362,7 @@ Events are loading into the `telemetry` container. Using that data, we can creat
 
 ### Task 3: Create an Azure Function based on a Cosmos DB trigger
 
-1. Open Visual Studio Code and navigate to the folder you created in Exercise 3 for Azure Functions. In the Azure menu, navigate to the top-right corner and select **Create Function...**
+1. Open Visual Studio Code and navigate to the folder you created in Exercise 4 for Azure Functions. In the Azure menu, navigate to the top-right corner and select **Create Function...**
 
     ![Create Function is selected.](media/code-create-function.png 'Create Function')
 
@@ -1570,7 +1628,7 @@ Events are loading into the `telemetry` container. Using that data, we can creat
 
     ![Maintenance recommendations are coming in.](media/azure-data-studio-event-loading.png 'Maintenance recommendations')
 
-## Exercise 5:  Enrich event telemetry with automated anomaly detection
+## Exercise 6:  Enrich event telemetry with automated anomaly detection
 
 Duration: 15 minutes
 
@@ -1701,7 +1759,7 @@ Your sensor data is flowing into the `telemetry_to_score` Event Hub and now you 
 
     ![The Start option in the Overview page is selected.](media/azure-stream-analytics-start.png 'Start')
 
-## Exercise 6:  Send scored telemetry data to PostgreSQL
+## Exercise 7:  Send scored telemetry data to PostgreSQL
 
 Duration: 15 minutes
 
@@ -1709,7 +1767,7 @@ Your sensor data is flowing into the `telemetry_to_score` Event Hub and now you 
 
 ### Task 1: Create an Azure Function to write temperature anomalies data to PostgreSQL
 
-1. Open Visual Studio Code and navigate to the folder you created in Exercise 3 for Azure Functions. In the Azure menu, navigate to the top-right corner and select **Create Function...**
+1. Open Visual Studio Code and navigate to the folder you created in Exercise 4 for Azure Functions. In the Azure menu, navigate to the top-right corner and select **Create Function...**
 
     ![Create Function is selected.](media/code-create-function.png 'Create Function')
 
@@ -1854,7 +1912,7 @@ Your sensor data is flowing into the `telemetry_to_score` Event Hub and now you 
 
     >**Note**:  It may take 2-5 minutes for temperature anomalies to reach PostgreSQL.
 
-## Exercise 7: Modernize services logic to use event sourcing and CQRS
+## Exercise 8: Modernize services logic to use event sourcing and CQRS
 
 Duration: 15 minutes
 
@@ -2025,7 +2083,7 @@ In this exercise you will deploy a group of microservices that use the CQRS patt
 
 In a high-load production environment, instead of using an Azure Function to process our Cosmos DB Change Feed we could use a Kubernetes Pod in AKS. Because of new additions to the Cosmos DB SDK in version 3, the AKS pod could auto-scale in and out based on the volume of changes. For the sake of this lab though, we're just going to host it in our ACI Container Group.
 
-The business logic in our container will be nearly the same as in our Function from Exercise 4, Task 3. You can view the new code at `Hands-on lab/Resources/Microservices/ProcessTelemetryEventsContainer/ProcessTelemetryEvents.cs`.
+The business logic in our container will be nearly the same as in our Function from Exercise 5, Task 3. You can view the new code at `Hands-on lab/Resources/Microservices/ProcessTelemetryEventsContainer/ProcessTelemetryEvents.cs`.
 
 1. With `Hands-on lab\Resources\Microservices` as your working directory in Powershell, run the following command (remembering to substitute the name of the container registry): 
 
@@ -2076,7 +2134,7 @@ The business logic in our container will be nearly the same as in our Function f
     az container logs --resource-group modernize-app --name modernizeappmicroservices --container-name processtelemetryeventscontainer
     ```
 
-## Exercise 8: View the factory status in a Power BI report
+## Exercise 9: View the factory status in a Power BI report
 
 Duration: 30 minutes
 
@@ -2365,7 +2423,7 @@ Duration: 10 minutes
 
 1. Navigate to [Power BI](https://app.powerbi.com) and log in if prompted.
 
-    >**Note**: If you did not create a Power BI workspace as part of exercise 8, there is no need to follow this cleanup task.
+    >**Note**: If you did not create a Power BI workspace as part of exercise 9, there is no need to follow this cleanup task.
 
 2. In the Workspaces menu, select the **...** menu option for the **Modern App** workspace and then choose **Workspace settings**.
 
