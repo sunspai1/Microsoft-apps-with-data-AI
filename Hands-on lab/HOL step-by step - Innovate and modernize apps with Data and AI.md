@@ -876,9 +876,9 @@ Now that your data is streaming into Azure IoT Hub, it is time to train and buil
 
     ![The stamp_press_model is selected.](media/azure-ml-models.png 'stamp_press_model')
 
-2. On the model's page, select **Deploy** to deploy the model.
+2. On the model's page, select **Deploy** to deploy the model and then select **Deploy to web service**.
 
-    ![The deploy option is selected.](media/azure-ml-model-deploy.png 'Deploy')
+    ![The deploy to web service option is selected.](media/azure-ml-model-deploy.png 'Deploy')
 
     >**Note**: in a production scenario, you will likely wish to use [Azure Machine Learning's MLOps](https://azure.microsoft.com/services/machine-learning/mlops/) instead of deploying models by hand through Azure ML Studio.
 
