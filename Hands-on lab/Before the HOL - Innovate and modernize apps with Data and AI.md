@@ -42,21 +42,21 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
 
 1. Microsoft Azure subscription must be pay-as-you-go or MSDN.
 
-    a. Trial subscriptions will not work.
+    - Trial subscriptions will not work.
 
 2. Install [Visual Studio Code](https://code.visualstudio.com/).
 
-    a. Install the [Azure IoT Tools extension](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools).
+    - Install the [Azure IoT Tools extension](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools).
 
-    b. Install the [C# for Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp).
+    - Install the [C# for Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp).
 
-    c. Install the [Azure Functions extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions).
+    - Install the [Azure Functions extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions).
 
 3. Install [the Azure Machine Learning SDK for Python](https://docs.microsoft.com/python/api/overview/azure/ml/install?view=azure-ml-py).
 
 4. Install [Azure Data Studio](https://docs.microsoft.com/sql/azure-data-studio/download-azure-data-studio).
 
-    a. Install the [PostgreSQL extension](https://docs.microsoft.com/sql/azure-data-studio/postgres-extension).
+    - Install the [PostgreSQL extension](https://docs.microsoft.com/sql/azure-data-studio/postgres-extension).
 
 5. Install Docker. [Docker Desktop](https://www.docker.com/products/docker-desktop) will work for this hands-on lab and supports Windows and MacOS. For Linux, install the Docker engine through your distribution's package manager.
 
@@ -84,11 +84,11 @@ In this task, you will use the Azure Portal to create a new Azure Resource Group
 
 4. At the top of the screen select the **+ New** option to add a new resource group.
 
-   ![Add Resource Group Menu](media/add-resource-group-menu.png 'Resource Group Menu')
+   ![The Add Resource Group Menu is displayed.](media/add-resource-group-menu.png 'Resource Group Menu')
 
 5. Create a new resource group with the name **modernize-app**, ensuring that the proper subscription and region nearest you are selected. **Please note** that currently, the only regions available for deploying to the Azure Database for PostgreSQL Hyperscale (Citus) deployment option are East US, East US 2, West US 2, North Central US, Canada Central, Australia East, Southeast Asia, North Europe, UK South, and West Europe. It is therefore recommended that you choose one of these regions for your resource group and all created resources. Once you have chosen a location, select **Review + Create**.
 
-   ![Create Resource Group](media/create-resource-group.png 'Resource Group')
+   ![How to Create a resource group is displayed.](media/create-resource-group.png 'Resource Group')
 
 6. On the Summary blade, select **Create** to provision your resource group.
 
@@ -113,7 +113,7 @@ The below ARM template deploys several Azure resources for the labs, including A
 
 3. Select the **Review + create** button, then **Create**. The provisioning of your deployment resources will take approximately 6 minutes.
 
-    > **Note**: You may experience a deployment step failing in regards to Role Assignment. This error may safely be ignored.
+    > **Note**: You may experience a deployment step failing in regard to Role Assignment. This error may safely be ignored.
 
 ### Task 3: Provision an Ubuntu Virtual Machine
 
@@ -154,7 +154,7 @@ In the hands-on lab, you will use an Ubuntu virtual machine to send sensor data.
 
 6. Copy this private key to a location on your drive, such as `C:\Temp`. The private key must be accessible only to the current user, with no permissions for other users or groups. To accomplish this in Windows, right-click on the key and select **Properties**. On the **Security** tab, select **Advanced**.
 
-    ![Set private key permissions.](media/azure-create-linux-vm-3.png 'Set private key permissions')
+    ![How to set private key permissions is displayed.](media/azure-create-linux-vm-3.png 'Set private key permissions')
 
 7. In Advanced Security Settings, ensure that you are the owner. If not, select **Change** and change the owner to your account.
 
@@ -186,7 +186,7 @@ In the hands-on lab, you will use an Ubuntu virtual machine to send sensor data.
 
 ### Task 4: Download the Hands-On Lab Contents
 
-1. Read through both steps of this task.  Once you have done that, scroll back to the top of this document and return to the top level of the repository.
+1. Read both steps of this task.  Once you have done that, scroll back to the top of this document and return to the top level of the repository.
 
     ![The link back to the top level of this workshop is selected.](media/github-top-level.png 'Microsoft Cloud Workshop')
 
