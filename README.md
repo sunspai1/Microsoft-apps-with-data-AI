@@ -10,7 +10,7 @@ Their sensor data is collected into a Kafka cluster, collected via a custom cons
 
 They are running into scalability issues as they add manufacturing capacity, but in the course of addressing this concern they would like to take the opportunity to modernize their infrastructure. In particular, they would like to modernize their solution to use microservices, and in particular apply the Event Sourcing and Command Query Responsibility Segregation (CQRS) patterns.
 
-August 2020
+June 2021
 
 ## Target audience
 
