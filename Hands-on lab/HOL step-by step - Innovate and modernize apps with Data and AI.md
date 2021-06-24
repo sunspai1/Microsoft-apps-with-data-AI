@@ -102,21 +102,21 @@ The web app is a modernized version of WWI's old monolithic web app, implementin
 
 1. Microsoft Azure subscription must be pay-as-you-go or MSDN.
 
-    a. Trial subscriptions will not work.
+    - Trial subscriptions will not work.
 
 2. Install [Visual Studio Code](https://code.visualstudio.com/).
 
-    a. Install the [Azure IoT Tools extension](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools).
+    - Install the [Azure IoT Tools extension](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools).
 
-    b. Install the [C# for Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp).
+    - Install the [C# for Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp).
 
-    c. Install the [Azure Functions extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions).
+    - Install the [Azure Functions extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions).
 
 3. Install [the Azure Machine Learning SDK for Python](https://docs.microsoft.com/python/api/overview/azure/ml/install?view=azure-ml-py).
 
 4. Install [Azure Data Studio](https://docs.microsoft.com/sql/azure-data-studio/download-azure-data-studio).
 
-    a. Install the [PostgreSQL extension](https://docs.microsoft.com/sql/azure-data-studio/postgres-extension).
+    - Install the [PostgreSQL extension](https://docs.microsoft.com/sql/azure-data-studio/postgres-extension).
 
 5. Install Docker. [Docker Desktop](https://www.docker.com/products/docker-desktop) will work for this hands-on lab and supports Windows and MacOS. For Linux, install the Docker engine through your distribution's package manager.
 
@@ -1381,7 +1381,7 @@ Events are loading into the `telemetry` container. Using that data, we can creat
 
    ![The correct template is selected, indicating the first step in the process.](media/code-cosmosdb-trigger.png 'Cosmos DB Trigger')
 
-3. Open **local.settings.json** and add a entries for the following, replacing references such as **modernize-app-#SUFFIX**, server names, or **{your_password}** with appropriate values.
+3. Open **local.settings.json** and add entries for the following, replacing references such as **modernize-app-#SUFFIX**, server names, or **{your_password}** with appropriate values.
 
     ```json
     "azureMLEndpointUrl": "{ Your Azure ML endpoint with /score }",
@@ -1920,7 +1920,7 @@ In this exercise you will deploy a group of microservices that use the CQRS patt
 
 ### Task 1: Build and push the containers
 
-1. In Powershell, change your directory to `Hands-on lab\Resources\Microservices`.
+1. In PowerShell, change your directory to `Hands-on lab\Resources\Microservices`.
 
 2. Run the following commands to build the docker containers, substituting the name of the container registry you created before the Hands-on Lab:
 
@@ -2065,7 +2065,7 @@ In this exercise you will deploy a group of microservices that use the CQRS patt
 
 ### Task 3: Deploy the container group
 
-1. Run the following command in Powershell to deploy the container group:
+1. Run the following command in PowerShell to deploy the container group:
 
     ```powershell
     az container create --resource-group modernize-app --file .\deploy-aci.yaml
@@ -2085,7 +2085,7 @@ In a high-load production environment, instead of using an Azure Function to pro
 
 The business logic in our container will be nearly the same as in our Function from Exercise 5, Task 3. You can view the new code at `Hands-on lab/Resources/Microservices/ProcessTelemetryEventsContainer/ProcessTelemetryEvents.cs`.
 
-1. With `Hands-on lab\Resources\Microservices` as your working directory in Powershell, run the following command (remembering to substitute the name of the container registry): 
+1. With `Hands-on lab\Resources\Microservices` as your working directory in PowerShell, run the following command (remembering to substitute the name of the container registry): 
 
     ```powershell
     docker build -f .\ProcessTelemetryEventsContainer\Dockerfile -t <CONTAINER_REGISTRY_URL>/microservices/synapse-innovate-mcw-process-telemetry-events-container .
